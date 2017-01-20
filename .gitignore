@@ -107,3 +107,4 @@ jspm_packages
 
 bundle.js
 test/mock/*.mp4
+test/temp/*.mp4
