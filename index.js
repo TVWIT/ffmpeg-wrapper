@@ -3,15 +3,15 @@ var pump = require('pump');
 var ProgressStream = require('./lib/progress-stream');
 
 function ffmpeg (args) {
-    var process = childProcess.spawn('/usr/local/bin/ffmpeg', args);
+    var _process = childProcess.spawn('/usr/local/bin/ffmpeg', args);
     var progressStream = ProgressStream();
     pump(
-        process.stderr,
+        _process.stderr,
         progressStream
     );
 
     return {
-        process: process,
+        process: _process,
         progressStream: progressStream
     };
 }

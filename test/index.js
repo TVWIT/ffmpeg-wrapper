@@ -19,6 +19,8 @@ var Ffmpeg = require('../');
 
 var server;
 var destFile = __dirname + '/temp/tempfile.mp4';
+
+// we are using a server b/c that's how it works in the transcoder
 test('setup', function (t) {
     server = Server(t.end.bind(t));
 });
@@ -29,15 +31,26 @@ test('ffmpeg', function (t) {
     var argsArray = args.replace(/\s+/g, ' ').split(' ');
     var ffmpeg = Ffmpeg(argsArray);
 
+    ffmpeg.process.on('error', console.log.bind(console, 'error'));
+    ffmpeg.process.on('exit', console.log.bind(console, 'exit'));
+
+    /*
+        emit data like
+        {
+             progress: 10,
+             duration: 100
+        }
+    */
     ffmpeg.progressStream.once('data', function (data) {
+        console.log('progress', data);
         t.equal(typeof data.progress, 'number',
             'should emit progress data');
         t.equal(typeof data.duration, 'number',
             'should emit progress data');
-
+        ffmpeg.process.kill();
     });
     ffmpeg.progressStream.on('data', function (data) {
-        console.log(data);
+        // console.log(data);
     });
     ffmpeg.progressStream.on('end', function () {
         t.pass('stream should end');
