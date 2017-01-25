@@ -5,11 +5,15 @@
   "main": "index.js",
   "scripts": {
     "install-test-files": "./scripts/install.sh",
-    "preversion": "npm test",
+    "clean": "rm -rf test/temp/*.js",
+    "preversion": "npm run lint",
     "postversion": "git push && git push --tags",
-    "test": "eslint index.js && node test/index.js | tap-spec"
+    "lint": "eslint .",
+    "test": "tape test/*.js | tap-spec"
   },
   "dependencies": {
+    "flush-write-stream": "^1.0.2",
+    "once": "^1.4.0",
     "pump": "^1.0.2",
     "through2": "^2.0.3"
   },
