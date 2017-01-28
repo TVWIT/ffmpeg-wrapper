@@ -9,7 +9,7 @@
     "install-test-files": "./scripts/install.sh",
     "clean": "rm -rf test/temp/*.js",
     "lint": "eslint .",
-    "test": "tape test/*.js | tap-spec"
+    "test": "npm run clean && tape test/*.js | tap-spec"
   },
   "dependencies": {
     "flush-write-stream": "^1.0.2",

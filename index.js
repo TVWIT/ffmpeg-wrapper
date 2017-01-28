@@ -35,10 +35,11 @@ function Ffmpeg (opts) {
         self.progressStream.end();
     });
 
-    // don't use `pipe` b/c the stderr stream will close before
-    // the process exits
-    this._process.stderr.on('data', function (d) {
-        self.progressStream.write(d);
+    // this._process.stderr.on('data', function (d) {
+    //     self.progressStream.write(d);
+    // });
+    this._process.stderr.pipe(this.progressStream, {
+        end: false
     });
     pump( this._process.stderr, sink );
 }
