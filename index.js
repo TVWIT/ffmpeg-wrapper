@@ -35,9 +35,6 @@ function Ffmpeg (opts) {
         self.progressStream.end();
     });
 
-    // this._process.stderr.on('data', function (d) {
-    //     self.progressStream.write(d);
-    // });
     this._process.stderr.pipe(this.progressStream, {
         end: false
     });
