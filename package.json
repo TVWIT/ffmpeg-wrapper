@@ -4,10 +4,10 @@
   "description": "ffmpeg wrapper for transcoding",
   "main": "index.js",
   "scripts": {
-    "install-test-files": "./scripts/install.sh",
-    "clean": "rm -rf test/temp/*.js",
     "preversion": "npm run lint",
     "postversion": "git push && git push --tags",
+    "install-test-files": "./scripts/install.sh",
+    "clean": "rm -rf test/temp/*.js",
     "lint": "eslint .",
     "test": "tape test/*.js | tap-spec"
   },

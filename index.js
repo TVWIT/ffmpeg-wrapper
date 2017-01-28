@@ -19,14 +19,10 @@ function Ffmpeg (opts) {
         self.outputText += data.toString();
         cb();
     });
-    pump(
-        this._process.stderr,
-        this.progressStream
-    );
-    pump( this._process.stderr, sink );
 
     var onErr = once(function (err) {
         self.progressStream.emit('error', err);
+        self.progressStream.end();
     });
 
     this._process.once('error', onErr);
@@ -38,6 +34,13 @@ function Ffmpeg (opts) {
         }
         self.progressStream.end();
     });
+
+    // don't use `pipe` b/c the stderr stream will close before
+    // the process exits
+    this._process.stderr.on('data', function (d) {
+        self.progressStream.write(d);
+    });
+    pump( this._process.stderr, sink );
 }
 
 Ffmpeg.prototype.cancel = function (cb) {
