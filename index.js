@@ -21,6 +21,11 @@ function Ffmpeg (opts) {
         cb();
     });
 
+    var sinkEnded = false;
+    sink.once('finish', function () {
+        sinkEnded = true;
+    });
+
     var onErr = once(function (err) {
         self.progressStream.emit('error', err);
         self.progressStream.end();
@@ -28,18 +33,21 @@ function Ffmpeg (opts) {
 
     this._process.once('error', onErr);
     this._process.once('exit', function (code, signal) {
-        console.log('exit', code, signal);
         self._exitted = true;
         if (code !== 0) {
+            if (!sinkEnded) {
+                return sink.once('finish', function () {
+                    var _err = new Error ('ffmpeg exit with code ' + code);
+                    return onErr(_err);
+                });
+            }
             var _err = new Error ('ffmpeg exit with code ' + code);
             return onErr(_err);
         }
         self.progressStream.end();
     });
 
-    this._process.stderr.pipe(this.progressStream, {
-        end: false
-    });
+    this._process.stderr.pipe(this.progressStream, { end: false });
     pump( this._process.stderr, sink );
 }
 
