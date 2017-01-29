@@ -7,7 +7,7 @@
     "preversion": "npm run lint",
     "postversion": "git push && git push --tags",
     "install-test-files": "./scripts/install.sh",
-    "clean": "rm -rf test/temp/*.js",
+    "clean": "rm -rf test/temp/*.mp4",
     "lint": "eslint .",
     "test": "npm run clean && tape test/*.js | tap-spec"
   },
