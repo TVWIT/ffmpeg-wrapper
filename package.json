@@ -1,6 +1,6 @@
 {
   "name": "ffmpeg-wrapper",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "ffmpeg wrapper for transcoding",
   "main": "index.js",
   "scripts": {
