@@ -11,6 +11,7 @@ function Ffmpeg (opts) {
     assert(opts.args && opts.args.length, 'we need args for ffmpeg');
 
     var self = this;
+    this._exitted = false;
     this._process = childProcess.spawn('/usr/local/bin/ffmpeg', opts.args);
     this.progressStream = ProgressStream();
     this.outputText = '';
@@ -28,6 +29,7 @@ function Ffmpeg (opts) {
     this._process.once('error', onErr);
     this._process.once('exit', function (code, signal) {
         console.log('exit', code, signal);
+        self._exitted = true;
         if (code !== 0) {
             var _err = new Error ('ffmpeg exit with code ' + code);
             return onErr(_err);
@@ -43,6 +45,9 @@ function Ffmpeg (opts) {
 
 Ffmpeg.prototype.cancel = function (cb) {
     cb = cb || noop;
+    if (this._exitted) {
+        return process.nextTick(cb);
+    }
     this._process.once('exit', function (code, signal) {
         cb(null);
     });
