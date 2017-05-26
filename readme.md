@@ -22,9 +22,9 @@ ffmpeg.progressStream.on('data', function (d) {
     { progress: 1, duration: 200 }
     */
 })
-ffmpeg.progressStream.on('error', function () {
-    // all text output from ffmpeg cli
-    console.log(ffmpeg.outputText)
+ffmpeg.progressStream.on('error', function (err) {
+    console.log(ffmpeg.outputText)  // all text output from ffmpeg cli
+    console.log(err)  // error object
 })
 ffmpeg.progressStream.on('end', function () {
     // ffmpeg fnished successfully
