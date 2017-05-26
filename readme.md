@@ -13,8 +13,7 @@ Wrapper around ffmpeg so that it's easier to deal with.
 ```js
 var Ffmpeg = require('ffmpeg-wrapper')
 var ffmpeg = Ffmpeg({
-    // this array is passed to child process
-    args: ['args']
+    args: ['args']  // this array is passed to child process
 })
 
 ffmpeg.progressStream.on('data', function (d) {
@@ -27,7 +26,7 @@ ffmpeg.progressStream.on('error', function (err) {
     console.log(err)  // error object
 })
 ffmpeg.progressStream.on('end', function () {
-    // ffmpeg fnished successfully
+    // ffmpeg finished successfully
 })
 
 ffmpeg.cancel(function () {
