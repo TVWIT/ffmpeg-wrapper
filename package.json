@@ -1,11 +1,11 @@
 {
-  "name": "ffmpeg-wrapper",
+  "name": "@invintusmedia/ffmpeg-wrapper",
   "version": "0.2.0",
   "description": "ffmpeg wrapper for transcoding",
   "main": "index.js",
   "scripts": {
     "preversion": "npm run lint",
-    "postversion": "git push && git push --tags",
+    "postversion": "git push && git push --tags && npm publish",
     "install-test-files": "./scripts/install.sh",
     "clean": "rm -rf test/temp/*.mp4",
     "lint": "eslint .",
@@ -32,6 +32,5 @@
   "bugs": {
     "url": "https://github.com/tvwit/ffmpeg-wrapper/issues"
   },
-  "homepage": "https://github.com/tvwit/ffmpeg-wrapper#readme",
-  "private": true
+  "homepage": "https://github.com/tvwit/ffmpeg-wrapper#readme"
 }
